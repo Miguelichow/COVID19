@@ -1,0 +1,68 @@
+<!-- <div class="card-columns m-5">
+    <div class="card" style="width: 18rem;" *ngFor="let pais of paises">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title text-center">{{ pais.country }}</h5>
+            <hr>
+            <p class="card-text text-center">Muertes | <span class="badge badge-pill badge-danger">{{ pais.deaths }}</span></p>
+            <p class="card-text text-center">Críticos | <span class="badge badge-pill badge-warning">{{ pais.critical }}</span></p>
+            <p class="card-text text-center">Recuperados | <span class="badge badge-pill badge-success">{{ pais.recovered }}</span></p>
+            <br>
+            <hr>
+            <button [routerLink]="['pais', pais.country]" class="btn btn-primary btn-block">Gráfica {{ pais.country }}</button>
+        </div>
+    </div>
+</div> -->
+
+<div align="center" class="container">
+    <div class="dropdown m-5">
+        <h6 class="text-center">Select the country:</h6>
+        <select style="width: 250px !important;" class="custom-select text-center">
+            <option *ngFor="let pais of paises" [value]="pais" (click)="paisSeleccionado($event)">{{ pais }}</option>
+        </select>
+    </div>
+
+    <table *ngIf="elegido" class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Deaths</th>
+                <th scope="col">Recovered</th>
+                <th scope="col">Confirmed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">{{ seleccionado }}</td>
+                <td><span class="badge badge-pill badge-danger">{{ lastDeath }}</span></td>
+                <td><span class="badge badge-pill badge-primary">{{ lastRecovered }}</span></td>
+                <td><span class="badge badge-pill badge-warning">{{ lastConfirmed }}</span></td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    <div *ngIf="elegido" class="flex">
+        <div class="flex-item">
+            <div style="display: block">
+                <canvas width="400" height="400" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins" (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+            </div>
+        </div><br><br>
+
+        <button class="btn btn-info btn-block" (click)="showAllData()">Show all data</button>
+        <button class="btn btn-info btn-block" (click)="showDailyData()">Show daily data</button>
+
+        <div align="center" class="dropdown m-5">
+            <h6 class="text-center">Select the number of days:</h6>
+            <select style="width: 150px !important;" class="custom-select text-center">
+                <option *ngFor="let n of numbers" [value]="n" (click)="send($event)">{{ n }}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- <footer class="footer text-center">
+        <div>
+            <p>&copy; Miguel Prieto - {{ anio | date:'y' }} </p>
+        </div>
+    </footer> -->
+</div>
